@@ -50,7 +50,7 @@
     <!-- Indicador de rolagem - visível apenas em telas maiores -->
     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce z-10 hidden md:block">
       <a @click.prevent="scrollToSection('about')" href="javascript:void(0)" 
-         class="text-white bg-[#7A5847]/60 rounded-full p-2 backdrop-blur-sm hover:bg-[#7A5847]/80 transition-colors block cursor-pointer">
+         class="text-white block cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
