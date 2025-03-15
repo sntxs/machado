@@ -87,8 +87,8 @@
       </div>
 
       <div class="text-center mt-12">
-        <a href="#contact"
-          class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-3 px-8 rounded-md transition-colors">
+        <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)" 
+           class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-3 px-8 rounded-md transition-colors cursor-pointer">
           Vamos Trabalhar Juntos
         </a>
       </div>
@@ -201,5 +201,14 @@ function closeLightbox() {
   lightbox.value.open = false;
   // Restaurar rolagem do body
   document.body.style.overflow = '';
+}
+
+// Função para rolar suavemente até a seção
+function scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    // Rola até o elemento sem alterar a URL
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
 }
 </script>

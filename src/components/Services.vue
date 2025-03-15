@@ -40,7 +40,7 @@
                 Álbum digital e impresso
               </li>
             </ul>
-            <a href="#contact" class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-2 px-4 rounded-md transition-colors">Solicitar Orçamento</a>
+            <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)" class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer">Solicitar Orçamento</a>
           </div>
         </div>
 
@@ -76,7 +76,7 @@
                 Cerimonial e assessoria
               </li>
             </ul>
-            <a href="#contact" class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-2 px-4 rounded-md transition-colors">Solicitar Orçamento</a>
+            <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)" class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer">Solicitar Orçamento</a>
           </div>
         </div>
 
@@ -112,16 +112,27 @@
                 Entrega rápida
               </li>
             </ul>
-            <a href="#contact" class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-2 px-4 rounded-md transition-colors">Solicitar Orçamento</a>
+            <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)" class="inline-block bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-2 px-4 rounded-md transition-colors cursor-pointer">Solicitar Orçamento</a>
           </div>
         </div>
       </div>
 
       <div class="text-center mt-12">
-        <a href="#contact" class="inline-block border border-[#7A5847] text-[#7A5847] hover:bg-[#7A5847]/10 font-medium py-3 px-8 rounded-md transition-colors">
+        <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)" class="inline-block border border-[#7A5847] text-[#7A5847] hover:bg-[#7A5847]/10 font-medium py-3 px-8 rounded-md transition-colors cursor-pointer">
           Consulte Todos os Nossos Serviços
         </a>
       </div>
     </div>
   </section>
-</template> 
+</template>
+
+<script setup lang="ts">
+// Função para rolar suavemente até a seção
+function scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    // Rola até o elemento sem alterar a URL
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+</script> 

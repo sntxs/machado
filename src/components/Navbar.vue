@@ -11,18 +11,18 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-8">
-            <a href="#home"
-              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors">Início</a>
-            <a href="#about"
-              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors">Sobre</a>
-            <a href="#services"
-              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors">Serviços</a>
-            <a href="#portfolio"
-              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors">Portfólio</a>
-            <a href="#testimonials"
-              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors">Depoimentos</a>
-            <a href="#contact"
-              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors">Contato</a>
+            <a @click.prevent="scrollToSection('home')" href="javascript:void(0)"
+              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Início</a>
+            <a @click.prevent="scrollToSection('about')" href="javascript:void(0)"
+              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Sobre</a>
+            <a @click.prevent="scrollToSection('services')" href="javascript:void(0)"
+              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Serviços</a>
+            <a @click.prevent="scrollToSection('portfolio')" href="javascript:void(0)"
+              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Portfólio</a>
+            <a @click.prevent="scrollToSection('testimonials')" href="javascript:void(0)"
+              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Depoimentos</a>
+            <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)"
+              class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Contato</a>
           </div>
         </div>
         <div class="md:hidden">
@@ -41,18 +41,18 @@
     <!-- Menu mobile -->
     <div v-if="mobileMenuOpen" class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-b border-gray-100">
-        <a href="#home" @click="mobileMenuOpen = false"
-          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium">Início</a>
-        <a href="#about" @click="mobileMenuOpen = false"
-          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium">Sobre</a>
-        <a href="#services" @click="mobileMenuOpen = false"
-          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium">Serviços</a>
-        <a href="#portfolio" @click="mobileMenuOpen = false"
-          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium">Portfólio</a>
-        <a href="#testimonials" @click="mobileMenuOpen = false"
-          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium">Depoimentos</a>
-        <a href="#contact" @click="mobileMenuOpen = false"
-          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium">Contato</a>
+        <a @click.prevent="scrollToSection('home'); mobileMenuOpen = false" href="javascript:void(0)"
+          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Início</a>
+        <a @click.prevent="scrollToSection('about'); mobileMenuOpen = false" href="javascript:void(0)"
+          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Sobre</a>
+        <a @click.prevent="scrollToSection('services'); mobileMenuOpen = false" href="javascript:void(0)"
+          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Serviços</a>
+        <a @click.prevent="scrollToSection('portfolio'); mobileMenuOpen = false" href="javascript:void(0)"
+          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Portfólio</a>
+        <a @click.prevent="scrollToSection('testimonials'); mobileMenuOpen = false" href="javascript:void(0)"
+          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Depoimentos</a>
+        <a @click.prevent="scrollToSection('contact'); mobileMenuOpen = false" href="javascript:void(0)"
+          class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Contato</a>
       </div>
     </div>
   </nav>
@@ -62,6 +62,15 @@
 import { ref } from 'vue';
 
 const mobileMenuOpen = ref(false);
+
+// Função para rolar suavemente até a seção
+function scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    // Rola até o elemento sem alterar a URL
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 </script>
 
 <style scoped>

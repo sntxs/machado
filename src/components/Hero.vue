@@ -35,12 +35,12 @@
           eventos.
         </p>
         <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-3">
-          <a href="#portfolio"
-            class="bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-3 px-8 rounded-md transition-colors transform hover:scale-105">
+          <a @click.prevent="scrollToSection('portfolio')" href="javascript:void(0)"
+            class="bg-[#7A5847] hover:bg-[#8a6957] text-white font-medium py-3 px-8 rounded-md transition-colors transform hover:scale-105 cursor-pointer inline-block text-center">
             Ver Portfólio
           </a>
-          <a href="#contact"
-            class="border-2 border-[#DFDBD9] text-[#DFDBD9] hover:bg-[#DFDBD9]/10 font-medium py-3 px-8 rounded-md transition-colors transform hover:scale-105">
+          <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)"
+            class="border-2 border-[#DFDBD9] text-[#DFDBD9] hover:bg-[#DFDBD9]/10 font-medium py-3 px-8 rounded-md transition-colors transform hover:scale-105 cursor-pointer inline-block text-center">
             Agende uma Sessão
           </a>
         </div>
@@ -49,7 +49,8 @@
 
     <!-- Indicador de rolagem - visível apenas em telas maiores -->
     <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 animate-bounce z-10 hidden md:block">
-      <a href="#about" class="text-white transition-colors block">
+      <a @click.prevent="scrollToSection('about')" href="javascript:void(0)" 
+         class="text-white bg-[#7A5847]/60 rounded-full p-2 backdrop-blur-sm hover:bg-[#7A5847]/80 transition-colors block cursor-pointer">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
         </svg>
@@ -57,6 +58,17 @@
     </div>
   </section>
 </template>
+
+<script setup lang="ts">
+// Função para rolar suavemente até a seção
+function scrollToSection(sectionId: string) {
+  const element = document.getElementById(sectionId);
+  if (element) {
+    // Rola até o elemento sem alterar a URL
+    element.scrollIntoView({ behavior: 'smooth' });
+  }
+}
+</script>
 
 <style scoped>
 .animate-fade-in {
