@@ -32,16 +32,6 @@ npm run dev
 
 3. Abra o navegador em `http://localhost:5173`
 
-## Personalização
-
-Para adicionar seus próprios produtos:
-1. Adicione as imagens em `/public/images/`
-2. Modifique o array `products` em `src/App.vue`
-
 ## Cores
 1. 7A5847 - Navbar e letras
 2. DFDBD9 - cor de fundo
-
-## Contato
-
-Para encomendas e mais informações, entre em contato através do WhatsApp ou Instagram.
