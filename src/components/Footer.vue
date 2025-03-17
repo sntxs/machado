@@ -81,7 +81,7 @@
           <div class="flex flex-col items-center md:items-start">
             <p class="text-gray-400 text-sm mb-1">&copy; {{ currentYear }} Machado Fotografia e Eventos. Todos os
               direitos reservados.</p>
-            <p class="text-gray-500 text-xs">Desenvolvido por <a href="https://github.com/nrdev" target="_blank" class="hover:text-[#BFA193] transition-colors">© {{ currentYear }} NR.dev</a></p>
+            <p class="text-gray-500 text-xs">Desenvolvido por <a href="https://nata-portifolio.vercel.app" target="_blank" class="hover:text-[#BFA193] transition-colors">© {{ currentYear }} NR.dev</a></p>
           </div>
           <div class="flex space-x-6 mt-4 md:mt-0">
             <a href="javascript:void(0)" class="text-gray-400 hover:text-[#DFDBD9] text-sm">Política de Privacidade</a>
