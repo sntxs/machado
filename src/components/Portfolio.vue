@@ -8,83 +8,26 @@
           inspirar.</p>
       </div>
 
-      <!-- Filtros de Portfólio -->
-      <div class="flex flex-wrap justify-center mb-8">
-        <button @click="activeFilter = 'todos'" :class="[
-          'px-4 py-2 mx-2 mb-2 rounded-md transition-colors',
-          activeFilter === 'todos'
-            ? 'bg-[#7A5847] text-white'
-            : 'bg-white text-gray-700 hover:bg-[#7A5847]/10'
-        ]">
-          Todos
-        </button>
-        <button @click="activeFilter = 'casamentos'" :class="[
-          'px-4 py-2 mx-2 mb-2 rounded-md transition-colors',
-          activeFilter === 'casamentos'
-            ? 'bg-[#7A5847] text-white'
-            : 'bg-white text-gray-700 hover:bg-[#7A5847]/10'
-        ]">
-          Casamentos
-        </button>
-        <button @click="activeFilter = '15anos'" :class="[
-          'px-4 py-2 mx-2 mb-2 rounded-md transition-colors',
-          activeFilter === '15anos'
-            ? 'bg-[#7A5847] text-white'
-            : 'bg-white text-gray-700 hover:bg-[#7A5847]/10'
-        ]">
-          15 Anos
-        </button>
-        <button @click="activeFilter = 'ensaios'" :class="[
-          'px-4 py-2 mx-2 mb-2 rounded-md transition-colors',
-          activeFilter === 'ensaios'
-            ? 'bg-[#7A5847] text-white'
-            : 'bg-white text-gray-700 hover:bg-[#7A5847]/10'
-        ]">
-          Ensaios
-        </button>
-        <button @click="activeFilter = 'eventos'" :class="[
-          'px-4 py-2 mx-2 mb-2 rounded-md transition-colors',
-          activeFilter === 'eventos'
-            ? 'bg-[#7A5847] text-white'
-            : 'bg-white text-gray-700 hover:bg-[#7A5847]/10'
-        ]">
-          Eventos
-        </button>
-      </div>
+      
 
-      <!-- Grid de Portfólio -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div v-for="(item, index) in filteredPortfolio" :key="index"
-          class="group relative overflow-hidden rounded-lg shadow-md cursor-pointer h-[300px]" @click="openLightbox(item)">
-          <div class="h-full w-full">
-            <img :src="item.image" :alt="item.title"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
-          </div>
-          <div
-            class="absolute inset-0 bg-gradient-to-t from-[#7A5847]/90 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-            <h3 class="text-white text-xl font-bold">{{ item.title }}</h3>
-            <p class="text-[#DFDBD9] text-sm">{{ item.category }}</p>
+      <!-- Grid de Portfólio (8 cards) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div v-for="card in cards" :key="card.slug"
+          class="group relative overflow-hidden rounded-lg shadow-md cursor-pointer h-[260px]"
+          @click="goTo(card.slug)">
+          <img :src="card.image" :alt="card.title"
+               class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          <div class="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300"></div>
+          <div class="absolute inset-x-0 bottom-0 p-4 translate-y-6 group-hover:translate-y-0 transition-transform duration-300">
+            <div class="bg-[#7A5847]/90 text-white rounded-md px-3 py-2 inline-block">
+              <p class="text-xs uppercase tracking-wide">{{ card.badge }}</p>
+              <h3 class="text-lg font-semibold">{{ card.title }}</h3>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Lightbox -->
-      <div v-if="lightbox.open" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90"
-        @click="closeLightbox">
-        <div class="relative max-w-4xl max-h-screen p-4" @click.stop>
-          <button @click="closeLightbox" class="absolute top-4 right-4 text-white hover:text-blue-400 z-10">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
-              stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <img :src="lightbox.image" :alt="lightbox.title" class="max-w-full max-h-[80vh] mx-auto">
-          <div class="text-center mt-4">
-            <h3 class="text-white text-xl font-bold">{{ lightbox.title }}</h3>
-            <p class="text-gray-300">{{ lightbox.description }}</p>
-          </div>
-        </div>
-      </div>
+      
 
       <div class="text-center mt-12">
         <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)" 
@@ -97,118 +40,73 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { useRouter } from 'vue-router'
 
-// Estado do filtro ativo
-const activeFilter = ref('todos');
+const router = useRouter()
 
-// Estado do lightbox
-const lightbox = ref({
-  open: false,
-  image: '',
-  title: '',
-  description: ''
-});
-
-// Dados do portfólio
-const portfolio = [
+const cards = [
+  // 2 Casamentos
   {
-    image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Casamento Ana & Pedro',
-    category: 'Casamentos',
-    filter: 'casamentos',
-    description: 'Um lindo casamento ao ar livre realizado em uma fazenda histórica.'
+    slug: 'casamento-ana-pedro',
+    badge: 'Casamento',
+    title: 'Ana & Pedro',
+    image: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1350&q=80'
   },
   {
-    image: 'https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Casamento Juliana & Marcos',
-    category: 'Casamentos',
-    filter: 'casamentos',
-    description: 'Cerimônia intimista realizada ao pôr do sol na praia.'
+    slug: 'casamento-juliana-marcos',
+    badge: 'Casamento',
+    title: 'Juliana & Marcos',
+    image: 'https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=1350&q=80'
+  },
+  // 2 Debutantes
+  {
+    slug: 'debutante-maria',
+    badge: '15 Anos',
+    title: 'Maria',
+    image: 'https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?auto=format&fit=crop&w=1350&q=80'
   },
   {
-    image: 'https://images.unsplash.com/photo-1502635385003-ee1e6a1a742d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Aniversário de 15 Anos - Maria',
-    category: '15 Anos',
-    filter: '15anos',
-    description: 'Festa temática com decoração personalizada e ensaio fotográfico exclusivo.'
+    slug: 'debutante-camila',
+    badge: '15 Anos',
+    title: 'Camila',
+    image: 'https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=1350&q=80'
+  },
+  // 2 Ensaios
+  {
+    slug: 'ensaio-pre-wedding',
+    badge: 'Ensaio',
+    title: 'Pré-wedding',
+    image: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?auto=format&fit=crop&w=1350&q=80'
   },
   {
-    image: 'https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Ensaio Pré-Wedding',
-    category: 'Ensaios',
-    filter: 'ensaios',
-    description: 'Ensaio realizado no centro histórico da cidade.'
+    slug: 'ensaio-urbano',
+    badge: 'Ensaio',
+    title: 'Urbano',
+    image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=1350&q=80'
+  },
+  // 2 Gestante
+  {
+    slug: 'gestante-parque',
+    badge: 'Gestante',
+    title: 'No Parque',
+    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1350&q=80'
   },
   {
-    image: 'https://images.unsplash.com/photo-1529636798458-92182e662485?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Aniversário de 15 Anos - Camila',
-    category: '15 Anos',
-    filter: '15anos',
-    description: 'Celebração sofisticada com decoração em tons de rosa e dourado.'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Evento Corporativo',
-    category: 'Eventos',
-    filter: 'eventos',
-    description: 'Cobertura completa de evento empresarial com mais de 200 convidados.'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Ensaio Gestante',
-    category: 'Ensaios',
-    filter: 'ensaios',
-    description: 'Ensaio fotográfico ao ar livre celebrando a maternidade.'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1507504031003-b417219a0fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Casamento Noturno',
-    category: 'Casamentos',
-    filter: 'casamentos',
-    description: 'Cerimônia realizada sob as estrelas com iluminação especial.'
-  },
-  {
-    image: 'https://images.unsplash.com/photo-1472653431158-6364773b2a56?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80',
-    title: 'Formatura Universitária',
-    category: 'Eventos',
-    filter: 'eventos',
-    description: 'Cobertura completa de cerimônia de formatura e festa.'
+    slug: 'gestante-praia',
+    badge: 'Gestante',
+    title: 'Na Praia',
+    image: 'https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1350&q=80'
   }
-];
+]
 
-// Filtragem do portfólio
-const filteredPortfolio = computed(() => {
-  if (activeFilter.value === 'todos') {
-    return portfolio;
-  }
-  return portfolio.filter(item => item.filter === activeFilter.value);
-});
-
-// Funções do lightbox
-function openLightbox(item: any) {
-  lightbox.value = {
-    open: true,
-    image: item.image,
-    title: item.title,
-    description: item.description
-  };
-  // Prevenir rolagem do body quando o lightbox está aberto
-  document.body.style.overflow = 'hidden';
+function goTo(slug: string) {
+  router.push({ name: 'gallery', params: { slug } })
 }
 
-function closeLightbox() {
-  lightbox.value.open = false;
-  // Restaurar rolagem do body
-  document.body.style.overflow = '';
-}
-
-// Função para rolar suavemente até a seção
 function scrollToSection(sectionId: string) {
-  const element = document.getElementById(sectionId);
+  const element = document.getElementById(sectionId)
   if (element) {
-    // Rola até o elemento sem alterar a URL
-    element.scrollIntoView({ behavior: 'smooth' });
+    element.scrollIntoView({ behavior: 'smooth' })
   }
 }
 </script>

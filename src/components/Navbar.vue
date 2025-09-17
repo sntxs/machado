@@ -11,17 +11,17 @@
         </div>
         <div class="hidden md:block">
           <div class="ml-10 flex items-baseline space-x-8">
-            <a @click.prevent="scrollToSection('home')" href="javascript:void(0)"
+            <a @click.prevent="goToAndScroll('#home')" href="/"
               class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Início</a>
-            <a @click.prevent="scrollToSection('about')" href="javascript:void(0)"
+            <a @click.prevent="goToAndScroll('#about')" href="/"
               class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Sobre</a>
-            <a @click.prevent="scrollToSection('services')" href="javascript:void(0)"
+            <a @click.prevent="goToAndScroll('#services')" href="/"
               class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Serviços</a>
-            <a @click.prevent="scrollToSection('portfolio')" href="javascript:void(0)"
+            <a @click.prevent="goToAndScroll('#portfolio')" href="/"
               class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Portfólio</a>
-            <a @click.prevent="scrollToSection('testimonials')" href="javascript:void(0)"
+            <a @click.prevent="goToAndScroll('#testimonials')" href="/"
               class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Depoimentos</a>
-            <a @click.prevent="scrollToSection('contact')" href="javascript:void(0)"
+            <a @click.prevent="goToAndScroll('#contact')" href="/"
               class="text-gray-800 hover:text-[#7A5847] px-3 py-2 rounded-md text-sm font-medium transition-colors cursor-pointer">Contato</a>
           </div>
         </div>
@@ -41,17 +41,17 @@
     <!-- Menu mobile -->
     <div v-if="mobileMenuOpen" class="md:hidden">
       <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-b border-gray-100">
-        <a @click.prevent="scrollToSection('home'); mobileMenuOpen = false" href="javascript:void(0)"
+        <a @click.prevent="goToAndScroll('#home'); mobileMenuOpen = false" href="/"
           class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Início</a>
-        <a @click.prevent="scrollToSection('about'); mobileMenuOpen = false" href="javascript:void(0)"
+        <a @click.prevent="goToAndScroll('#about'); mobileMenuOpen = false" href="/"
           class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Sobre</a>
-        <a @click.prevent="scrollToSection('services'); mobileMenuOpen = false" href="javascript:void(0)"
+        <a @click.prevent="goToAndScroll('#services'); mobileMenuOpen = false" href="/"
           class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Serviços</a>
-        <a @click.prevent="scrollToSection('portfolio'); mobileMenuOpen = false" href="javascript:void(0)"
+        <a @click.prevent="goToAndScroll('#portfolio'); mobileMenuOpen = false" href="/"
           class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Portfólio</a>
-        <a @click.prevent="scrollToSection('testimonials'); mobileMenuOpen = false" href="javascript:void(0)"
+        <a @click.prevent="goToAndScroll('#testimonials'); mobileMenuOpen = false" href="/"
           class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Depoimentos</a>
-        <a @click.prevent="scrollToSection('contact'); mobileMenuOpen = false" href="javascript:void(0)"
+        <a @click.prevent="goToAndScroll('#contact'); mobileMenuOpen = false" href="/"
           class="text-gray-800 hover:text-[#7A5847] block px-3 py-2 rounded-md text-base font-medium cursor-pointer">Contato</a>
       </div>
     </div>
@@ -59,17 +59,21 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, nextTick } from 'vue';
+import { useRouter } from 'vue-router'
 
 const mobileMenuOpen = ref(false);
 
-// Função para rolar suavemente até a seção
-function scrollToSection(sectionId: string) {
-  const element = document.getElementById(sectionId);
-  if (element) {
-    // Rola até o elemento sem alterar a URL
-    element.scrollIntoView({ behavior: 'smooth' });
+const router = useRouter()
+
+async function goToAndScroll(hash: string) {
+  if (router.currentRoute.value.name !== 'home') {
+    await router.push({ name: 'home' })
+    await nextTick()
   }
+  const id = hash.replace('#','')
+  const el = document.getElementById(id)
+  if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
